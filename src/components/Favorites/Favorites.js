@@ -1,9 +1,9 @@
 import styles from './Favorites.module.css';
 
-function Favorites({ favorites }) {
+function Favorites({ favorites,selected}) {
 
   return (
-    <div className={styles.card} >
+    <div className={styles.card} onClick={()=>selected(favorites._id)} >
       <img className={styles.img} src={favorites.imgUrl} alt={favorites.imgAlt} />
       <h2>{favorites.movieTitle}</h2>
       <p>Popularity: {favorites.popularity}</p>

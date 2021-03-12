@@ -1,11 +1,12 @@
 import styles from './Card.module.css';
 
-function Card(props) {
+const  Card=(props)=> {
 
-  const { card, toggleFavorites,type } = props;
-console.log(type);
+  const { card, available} = props;
+
   return (
-    <div className={styles.card} onClick={() => toggleFavorites(card._id,type)}>
+    <div className={styles.card} onClick={() => available(card._id,)}
+    >
       <img className={styles.img} src={card.imgUrl} alt={card.imgAlt} />
       <h2>{card.movieTitle}</h2>
       <p>Popularity: {card.popularity}</p>
@@ -16,3 +17,8 @@ console.log(type);
 }
 
 export default Card;
+
+
+//onClick={() => toggleFavorites(card._id,type)}
+
+//toggleFavorites,type 

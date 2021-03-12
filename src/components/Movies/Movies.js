@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import Card from "../Card/Card";
 import styles from "./Movies.module.css";
 import idGenerator from "../../helpers/idGenerator";
-import Favorite from "../Favorites/Favorites";
-
+import Favorite from './../Favorites/Favorites'
 class Movies extends Component {
   state = {
     cards: [
@@ -59,7 +58,7 @@ class Movies extends Component {
   //   const cards = [...this.state.cards];
   //   const selectedUserIndex = this.state.cards.findIndex(
   //     (item) => {
-  //       return item.id === id;
+  //       return item.id === id; 
   //     }
   //   );
 
@@ -88,36 +87,75 @@ class Movies extends Component {
   //   });
   // };
 
-  toggleFavorites = (id, type) => {
+  // toggleFavorites = (id, type) => {
+  //   const cards = [...this.state.cards];
+  //   const favorites = [...this.state.favorites];
+
+  //   if (type === "available") {
+  //     // ADD TO FAVORITES
+  //     const myFoundObj = this.state.cards.find((item, idx, arr) => {
+  //       return item._id === id;
+  //     });
+  //     favorites.push(myFoundObj);
+
+  //     // DELETE ITEM FROM CARDS
+  //     const itemIdx = cards.findIndex((item) => item._id === id);
+  //     cards.splice(itemIdx, 1);
+  //   }
+
+  //   if (type === "favorites") {
+  //     // ADD TO FAVORITES
+  //     const myFoundObj = this.state.favorites.find((item, idx, arr) => {
+  //       return item._id === id;
+  //     });
+  //     cards.push(myFoundObj);
+
+  //     // DELETE ITEM FROM CARDS
+  //     const itemIdx = favorites.findIndex((item) => item._id === id);
+  //     favorites.splice(itemIdx, 1);
+  //   }
+  //   this.setState({ favorites, cards });
+
+  // };
+  available=(id)=>{
+    const cards = [...this.state.cards];
+    const favorites = [...this.state.favorites];
+    const myFoundObj = this.state.cards.find((item, idx, arr) => {
+      return item._id === id;
+    });
+    favorites.push(myFoundObj);
+
+    // DELETE ITEM FROM CARDS
+    const itemIdx = cards.findIndex((item) => item._id === id);
+    cards.splice(itemIdx, 1);
+
+    this.setState({ favorites, cards });
+  }
+  selected=(id)=>{
     const cards = [...this.state.cards];
     const favorites = [...this.state.favorites];
 
-    if (type === "available") {
-      // ADD TO FAVORITES
-      const myFoundObj = this.state.cards.find((item, idx, arr) => {
-        return item._id === id;
-      });
-      favorites.push(myFoundObj);
+    const myFoundObj = this.state.cards.find((item, idx, arr) => {
+      return item._id === id;
+     
+    });
+ 
+    favorites.push(myFoundObj);
+    console.log("barev")
+     
 
-      // DELETE ITEM FROM CARDS
-      const itemIdx = cards.findIndex((item) => item._id === id);
-      cards.splice(itemIdx, 1);
-    }
+    // DELETE ITEM FROM CARDS
+    const itemIdx = cards.findIndex((item) => item._id === id);
+    cards.splice(itemIdx, 1);
 
-    if (type === "favorites") {
-      // ADD TO FAVORITES
-      const myFoundObj = this.state.favorites.find((item, idx, arr) => {
-        return item._id === id;
-      });
-      cards.push(myFoundObj);
-
-      // DELETE ITEM FROM CARDS
-      const itemIdx = favorites.findIndex((item) => item._id === id);
-      favorites.splice(itemIdx, 1);
-    }
     this.setState({ favorites, cards });
+    
 
-  };
+    }
+   
+
+   
+  
 
   render() {
     return (
@@ -130,7 +168,8 @@ class Movies extends Component {
                 key={card._id}
                 type="available"
                 // handleAddFavorites={this.handleAddFavorites}
-                toggleFavorites={this.toggleFavorites}
+                //toggleFavorites={this.toggleFavorites}
+                available={this.available}
                 card={card}
               />
             );
@@ -141,17 +180,18 @@ class Movies extends Component {
           <p>{this.state.favorites.length}</p>
           <hr></hr>
           <div className={styles.container}>
-            {this.state.favorites.map((favorites) => {
-              // return <Favorite key={favorites._id} favorites={favorites} />;
-              return (
-                <Card
-                  key={favorites._id}
-                  type="favorites"
-                  // handleAddFavorites={this.handleAddFavorites}
-                  toggleFavorites={this.toggleFavorites}
-                  card={favorites}
-                />
-              );
+            {this.state.favorites.map((favorites,_id) => {
+               return <Favorite key={favorites._id} favorites={favorites}  selected={this.selected} />;
+              // return (
+              //   <Card
+              //     key={favorites._id}
+              //     type="favorites"
+              //      //handleAddFavorites={this.handleAddFavorites}
+              //     //toggleFavorites={this.toggleFavorites}
+              //     selected={this.selected}
+              //     card={favorites}
+              //   />
+              // );
             })}
           </div>
         </div>

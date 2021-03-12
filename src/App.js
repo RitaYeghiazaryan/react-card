@@ -1,7 +1,7 @@
 import './App.css';
 import Movies from './components/Movies/Movies';
 
-function App() {
+const App=()=> {
   return(
     <div>
       <Movies />
