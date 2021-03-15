@@ -45,119 +45,41 @@ class Movies extends Component {
     ],
     favorites: [],
   };
-  // handleAddFavorites = (id) => {
-  //   let cards = [...this.state.cards];
-  //   cards = cards.filter(item => item._id !== id)
-
-  //   this.setState({
-  //     cards
-  //   });
-  // }
-
-  // handleAddFavorites= (id) => {
-  //   const cards = [...this.state.cards];
-  //   const selectedUserIndex = this.state.cards.findIndex(
-  //     (item) => {
-  //       return item.id === id; 
-  //     }
-  //   );
-
-  //   cards.splice(selectedUserIndex, 1);
-  //   this.setState({
-  //      cards,
-  //      });
-  // };
-
-  // handleAddFavorites = (id) => {
-  //   const cards = [...this.state.cards];
-  //   const favorites = [...this.state.favorites];
-  //   const found = cards.find(id => { return id });
-  //   const selectedUserIndex = this.state.cards.findIndex(
-  //     (item) => {
-  //       return item.id === id;
-  //     }
-  //   );
-  //   console.log(id)
-
-  //   cards.splice(selectedUserIndex, 1);
-  //   favorites.push(found);
-  //   this.setState({
-  //     cards,
-  //     favorites
-  //   });
-  // };
-
-  // toggleFavorites = (id, type) => {
-  //   const cards = [...this.state.cards];
-  //   const favorites = [...this.state.favorites];
-
-  //   if (type === "available") {
-  //     // ADD TO FAVORITES
-  //     const myFoundObj = this.state.cards.find((item, idx, arr) => {
-  //       return item._id === id;
-  //     });
-  //     favorites.push(myFoundObj);
-
-  //     // DELETE ITEM FROM CARDS
-  //     const itemIdx = cards.findIndex((item) => item._id === id);
-  //     cards.splice(itemIdx, 1);
-  //   }
-
-  //   if (type === "favorites") {
-  //     // ADD TO FAVORITES
-  //     const myFoundObj = this.state.favorites.find((item, idx, arr) => {
-  //       return item._id === id;
-  //     });
-  //     cards.push(myFoundObj);
-
-  //     // DELETE ITEM FROM CARDS
-  //     const itemIdx = favorites.findIndex((item) => item._id === id);
-  //     favorites.splice(itemIdx, 1);
-  //   }
-  //   this.setState({ favorites, cards });
-
-  // };
-  available=(id)=>{
-    const cards = [...this.state.cards];
-    const favorites = [...this.state.favorites];
-    const myFoundObj = this.state.cards.find((item, idx, arr) => {
-      return item._id === id;
-    });
-    favorites.push(myFoundObj);
-
-    // DELETE ITEM FROM CARDS
-    const itemIdx = cards.findIndex((item) => item._id === id);
-    cards.splice(itemIdx, 1);
-
-    this.setState({ favorites, cards });
-  }
-  selected=(id)=>{
-    const cards = [...this.state.cards];
-    const favorites = [...this.state.favorites];
-
-    const myFoundObj = this.state.cards.find((item, idx, arr) => {
-      return item._id === id;
-     
-    });
- 
-    favorites.push(myFoundObj);
-    console.log("barev")
-     
-
-    // DELETE ITEM FROM CARDS
-    const itemIdx = cards.findIndex((item) => item._id === id);
-    cards.splice(itemIdx, 1);
-
-    this.setState({ favorites, cards });
-    
-
-    }
-   
-
-   
   
+  available=(id)=>{
+        // ADD TO FAVORITES
+        const cards = [...this.state.cards];
+        const favorites = [...this.state.favorites];
+        const myFoundObj = this.state.cards.find((item, idx, arr) => {
+          return item._id === id;
+        });
+        favorites.push(myFoundObj);
+        
+      // DELETE ITEM FROM CARDS
+      const itemIdx = cards.findIndex((item) => item._id === id);
+      cards.splice(itemIdx, 1);
 
-  render() {
+      this.setState({cards,favorites})
+    }
+    favoritesMovie=(id)=>{
+    const cards = [...this.state.cards];
+    const favorites = [...this.state.favorites];
+
+    // ADD TO FAVORITES
+    const myFoundObj = this.state.favorites.find((item, idx, arr) => {
+      return item._id === id;
+    });
+    cards.push(myFoundObj);
+
+    // DELETE ITEM FROM CARDS
+    const itemIdx = favorites.findIndex((item) => item._id === id);
+    favorites.splice(itemIdx, 1);
+  
+     this.setState({ favorites, cards });
+
+};
+render() {
+
     return (
       <div>
         <h1> Available Card </h1>
@@ -166,10 +88,7 @@ class Movies extends Component {
             return (
               <Card
                 key={card._id}
-                type="available"
-                // handleAddFavorites={this.handleAddFavorites}
-                //toggleFavorites={this.toggleFavorites}
-                available={this.available}
+                handleOnCards={this.available}
                 card={card}
               />
             );
@@ -181,17 +100,8 @@ class Movies extends Component {
           <hr></hr>
           <div className={styles.container}>
             {this.state.favorites.map((favorites,_id) => {
-               return <Favorite key={favorites._id} favorites={favorites}  selected={this.selected} />;
-              // return (
-              //   <Card
-              //     key={favorites._id}
-              //     type="favorites"
-              //      //handleAddFavorites={this.handleAddFavorites}
-              //     //toggleFavorites={this.toggleFavorites}
-              //     selected={this.selected}
-              //     card={favorites}
-              //   />
-              // );
+               return <Favorite key={favorites._id} favorites={favorites}   handleOnCards={this.favoritesMovie} />;
+            
             })}
           </div>
         </div>
